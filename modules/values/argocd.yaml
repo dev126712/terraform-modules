@@ -1,0 +1,24 @@
+server:
+  service:
+    type: NodePort
+  additionalApplications:
+    - name: ${argocd_name_app}
+      project: default
+      namespace: argocd
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: default
+      source:
+        repoURL: ${repo_url}
+        targetRevision: ${target_revision}
+        path: ${path}
+      syncPolicy:
+        automated:
+          prune: ${syncPolicy_prune}
+          selfHeal: ${syncPolicy_selfHeal}
+  config:
+     application.instanceLabelKey: argocd.argoproj.io/instance
+  params:
+    server.insecure: true
+global:
+  domain: ${domaine_name}

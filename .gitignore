@@ -1,0 +1,35 @@
+# Local .terraform folder (contains providers and modules)
+.terraform/
+
+# Terraform state files (These MUST stay in your Remote Backend/GCS Bucket)
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+
+# Terraform variables (where you might keep secret keys locally)
+*.tfvars
+*.tfvars.json
+
+# Crash logs
+crash.log
+
+# Vault tokens and local secrets
+.vault-token
+*.pem
+*.key
+# Helm dependencies
+charts/
+tmp/
+
+# Kubernetes local context/kubeconfig
+.kube/
+kubeconfig
+*.pub
+*.pfx
+*.crt
+
+# GCP Service Account JSON keys
+*.json
+!k8s-manifests/**/*.json # Allow JSON if it's a non-secret manifest
+
+

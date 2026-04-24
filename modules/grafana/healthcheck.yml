@@ -1,0 +1,18 @@
+apiVersion: networking.gke.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: grafana-healthcheck
+  namespace: monitoring
+spec:
+  default:
+    config:
+      type: HTTP
+      httpHealthCheck:
+        # This MUST be the port the pod actually listens on
+        port: 3000 
+        # Grafana's dedicated health endpoint
+        requestPath: /api/health 
+  targetRef:
+    group: ""
+    kind: Service
+    name: vm-grafana

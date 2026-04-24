@@ -1,0 +1,16 @@
+apiVersion: networking.gke.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: grafana-healthcheck
+  namespace: monitoring
+spec:
+  default:
+    config:
+      type: HTTP
+      httpHealthCheck:
+        port: 80
+        requestPath: /api/health  # Grafana's specific health endpoint
+  targetRef:
+    group: ""
+    kind: Service
+    name: vm-grafana

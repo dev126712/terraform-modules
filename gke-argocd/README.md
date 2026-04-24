@@ -24,3 +24,4 @@ Security is integrated at multiple layers of the stack.HashiCorp Vault:
   - Deployed for secret management, ensuring that sensitive credentials are never stored in plain text. It uses a dedicated Google Service Account for added security.
   - Trivy Operator: This tool constantly scans your running container images for "Critical" vulnerabilities, helping you stay ahead of security threats.
   - Least Privilege: GKE nodes are configured with specific OAuth scopes limited to logging, monitoring, and read-only storage access.
+![GKE_ARGOCD]()

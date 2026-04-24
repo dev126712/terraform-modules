@@ -24,4 +24,4 @@ Security is integrated at multiple layers of the stack.HashiCorp Vault:
   - Deployed for secret management, ensuring that sensitive credentials are never stored in plain text. It uses a dedicated Google Service Account for added security.
   - Trivy Operator: This tool constantly scans your running container images for "Critical" vulnerabilities, helping you stay ahead of security threats.
   - Least Privilege: GKE nodes are configured with specific OAuth scopes limited to logging, monitoring, and read-only storage access.
-![GKE_ARGOCD]()
+![GKE_ARGOCD](https://github.com/dev126712/terraform-modules/blob/07f7c694458a257f9dc3bb6eee298cb5f3150ef6/gke-argocd/gke-argocd-module.drawio%20(2).png)

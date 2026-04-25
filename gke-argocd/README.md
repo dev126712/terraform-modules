@@ -1,5 +1,7 @@
 ## Module: GKE + ArgoCD
 
+![My Skills](https://skillicons.dev/icons?i=kubernetes)
+
 The gke-argocd module is a comprehensive "Infrastructure-as-Code" (IaC) solution that builds a production-ready environment on Google Cloud Platform (GCP) & GKE cluster and automatically installs ArgoCD for GitOps, VictoriaMetrics for monitoring, Trivy for scan security, Vault for secrets management.
 
 #### Core Infrastructure & Networking

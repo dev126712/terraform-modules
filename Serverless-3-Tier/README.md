@@ -1,4 +1,4 @@
-#### Serverless 3 Tier Architecture
+#### Serverless 3 Tier Architecture ( GCP )
 The Tech:
 - Cloud Run (Frontend/Backend)
 -  Cloud SQL (Database)

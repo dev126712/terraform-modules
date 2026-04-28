@@ -84,9 +84,16 @@ resource "google_compute_url_map" "frontend" {
     name            = "allpaths"
     default_service = google_compute_backend_service.frontend.id
 
-    path_rule {
-      paths   = ["/api", "/api/*"]
-      service = google_compute_backend_service.backend.id
+    # DYNAMIC BLOCK STARTS HERE
+    dynamic "path_rule" {
+      for_each = var.api_routes
+      content {
+        # This creates paths like ["/api/*", "/v1/auth/*", etc.]
+        paths   = ["/${path_rule.key}/*"] 
+        
+        # We assume your backend services are named according to the value in the map
+        service = google_compute_backend_service.backend[path_rule.value].id
+      }
     }
   }
 }
@@ -96,28 +103,53 @@ resource "google_compute_target_http_proxy" "frontend" {
   url_map = google_compute_url_map.frontend.id
 }
 
+resource "google_compute_global_address" "website_ip" {
+  name         = "lb-static-ip"
+  address_type = "EXTERNAL" # This makes it a public IP on the internet
+}
+
 resource "google_compute_global_forwarding_rule" "frontend" {
   name                  = "forwarding-rule"
   target                = google_compute_target_http_proxy.frontend.id
   port_range            = "80"
   load_balancing_scheme = "EXTERNAL_MANAGED"
+  ip_address            = google_compute_global_address.website_ip.id
 }
-
 
 ##################### ---------------- Backend ---------------- #####################
 
 resource "google_cloud_run_v2_service" "backend" {
-  name     = var.google_cloud_run_backend_service_name
+  for_each = toset(values(var.api_routes))
+  name     = "${each.key}-service"
   location = var.cloud_run_region
   ingress  = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
 
   template {
+
+    service_account = google_service_account.backend_sa.email
     vpc_access {
       connector = google_vpc_access_connector.main_connector.id
       egress    = "ALL_TRAFFIC"
     }
     containers {
       image = var.backend_container_image
+      env {
+        name  = "DB_HOST"
+        value = google_sql_database_instance.main.private_ip_address
+      }
+      env {
+        name  = "DB_USER"
+        value = google_sql_user.users.name
+      }
+      env {
+        name = "DB_PASSWORD"
+        value_source {
+          secret_key_ref {
+            secret  = google_secret_manager_secret.db_password.secret_id
+            version = "latest"
+          }
+        }
+      }
     }
   }
 }
@@ -130,22 +162,25 @@ resource "google_cloud_run_v2_service_iam_member" "backend_access" {
 }
 
 resource "google_compute_region_network_endpoint_group" "backend_neg" {
-  name                  = "backend-neg"
+  for_each              = toset(values(var.api_routes)) # Add this line
+  name                  = "${each.key}-neg"
   network_endpoint_type = "SERVERLESS"
   region                = var.cloud_run_region
   cloud_run {
-    service = google_cloud_run_v2_service.backend.name
+    service = google_cloud_run_v2_service.backend[each.key].name
   }
 }
 
 resource "google_compute_backend_service" "backend" {
-  name                  = "api-backend-service"
-  protocol              = "HTTP"
+  for_each = toset(values(var.api_routes))
+  
+  name                  = "${each.key}-backend"
   load_balancing_scheme = "EXTERNAL_MANAGED"
-  enable_cdn            = false # Typically false for dynamic APIs
-
+  protocol              = "HTTP"
+  
   backend {
-    group = google_compute_region_network_endpoint_group.backend_neg.id
+    # This links each backend to its specific Cloud Run NEG
+    group = google_compute_region_network_endpoint_group.backend_neg[each.key].id
   }
 }
 
@@ -211,5 +246,40 @@ resource "google_sql_database" "database" {
 resource "google_sql_user" "users" {
   name     = "app_user"
   instance = google_sql_database_instance.main.name
-  password = "your-secure-password" # In the next step, we'll move this to Secret Manager
+  # Reference the random password directly
+  password = random_password.db_password.result 
+}
+
+# 1. Generate a secure random password
+resource "random_password" "db_password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
+# 2. Create the Secret container
+resource "google_secret_manager_secret" "db_password" {
+  secret_id = "db-password"
+  replication {
+    auto {}
+  }
+  depends_on = [google_project_service.enabled_apis]
+}
+
+# 3. Store the random password in the secret
+resource "google_secret_manager_secret_version" "db_password_v1" {
+  secret      = google_secret_manager_secret.db_password.id
+  secret_data = random_password.db_password.result
+}
+
+resource "google_service_account" "backend_sa" {
+  account_id   = "backend-runner"
+  display_name = "Backend Cloud Run Service Account"
+}
+
+# Grant the service account permission to read the secret
+resource "google_secret_manager_secret_iam_member" "accessor" {
+  secret_id = google_secret_manager_secret.db_password.id
+  role      = "roles/secretmanager.secretAccessor"
+  member    = "serviceAccount:${google_service_account.backend_sa.email}"
 }

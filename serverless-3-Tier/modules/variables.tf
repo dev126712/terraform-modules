@@ -30,3 +30,16 @@ variable "backend_container_image" {
 variable "frontend_container_image" {
     description = "frontend image"
 }
+
+##################### ---------------- API Route ---------------- #####################
+
+
+variable "api_routes" {
+  description = "A map of API paths to their respective backend services"
+  type        = map(string)
+  default     = {
+    "api"     = "backend"    # /api/* goes to the main backend
+    "v1/auth" = "auth-svc"   # /api/v1/auth/* goes to a specific auth service
+    "billing" = "billing-svc" # /api/billing/* goes to billing
+  }
+}

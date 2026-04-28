@@ -155,8 +155,9 @@ resource "google_cloud_run_v2_service" "backend" {
 }
 
 resource "google_cloud_run_v2_service_iam_member" "backend_access" {
-  name     = google_cloud_run_v2_service.backend.name
-  location = google_cloud_run_v2_service.backend.location
+  for_each = toset(values(var.api_routes))
+  name     = google_cloud_run_v2_service.backend[each.key].name
+  location = google_cloud_run_v2_service.backend[each.key].location
   role     = "roles/run.invoker"
   member   = "allUsers"
 }

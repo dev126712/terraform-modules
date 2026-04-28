@@ -1,8 +1,8 @@
 module "cloud_run" {
   source = "./modules"
 
-  vpc    = "serverless_app_vpc"
-  subnet = "serverless_app_subnet"
+  vpc    = "serverless-app-vpc"
+  subnet = "serverless-app-subnet"
   # cloud run configuration
   cloud_run_region              = "us-central1"
   project_id                    = "project-test-490416"

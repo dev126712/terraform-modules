@@ -5,11 +5,11 @@ A production-ready, highly scalable 3-tier web architecture deployed using Terra
 ### 🏗️ Architecture Overview
 The architecture is divided into three distinct layers:
 
-    - Presentation Tier: A Cloud Run V2 frontend service protected by a Global External HTTP(S) Load Balancer with Cloud CDN enabled for edge caching.
+- Presentation Tier: A Cloud Run V2 frontend service protected by a Global External HTTP(S) Load Balancer with Cloud CDN enabled for edge caching.
 
-    - Application Tier: One or more Cloud Run V2 backend services handling business logic, accessible only via internal load balancer traffic.- - 
+- Application Tier: One or more Cloud Run V2 backend services handling business logic, accessible only via internal load balancer traffic.- - 
 
-    - Data Tier: A Cloud SQL (PostgreSQL 15) instance configured with Private IP only, ensuring the database is never exposed to the public internet.
+- Data Tier: A Cloud SQL (PostgreSQL 15) instance configured with Private IP only, ensuring the database is never exposed to the public internet.
 
 ### 🚀 Key Features
 

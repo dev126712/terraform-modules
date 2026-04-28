@@ -8,6 +8,6 @@ module "cloud_run" {
   project_id                    = "project-test-490416"
   google_cloud_run_service_name = "test-service"
 
-  backend_container_image  = "us-docker.pkg.dev/cloudrun/container/hello"
-  frontend_container_image = "us-docker.pkg.dev/cloudrun/container/hello"
+  backend_container_image  = "us-central1-docker.pkg.dev/project-test-490416/app-images/backend:latest3"
+  frontend_container_image = "us-central1-docker.pkg.dev/project-test-490416/app-images/frontend:latest3"
 }

@@ -27,6 +27,9 @@ resource "google_cloud_run_v2_service" "frontend" {
   template {
     containers {
       image = var.frontend_container_image
+      ports {
+        container_port = 80 # Change this to the port your app actually uses
+      }
     }
   }
 }
@@ -142,6 +145,10 @@ resource "google_cloud_run_v2_service" "backend" {
         value = google_sql_user.users.name
       }
       env {
+        name  = "DB_NAME"
+        value = google_sql_database.database.name  # Added this
+      }
+      env {
         name = "DB_PASSWORD"
         value_source {
           secret_key_ref {
@@ -208,6 +215,7 @@ resource "google_service_networking_connection" "private_vpc_connection" {
   network                 = google_compute_network.app_vpc.id 
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.private_ip_address.name]
+  depends_on              = [google_project_service.enabled_apis]
 }
 
 # 3. The Cloud SQL Instance

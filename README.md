@@ -6,7 +6,7 @@ Welcome to my personal collection of reusable Terraform modules. This repository
 
 | Module Name | Cloud | Description |
 | :--- | :--- | :--- |
-| [**serverless-3-tier**](./https://github.com/dev126712/terraform-modules/tree/main/serverless-3-Tier) | GCP | Production-ready Cloud Run stack with Global Load Balancing, CDN, Secret Manager, and Private Cloud SQL. |
+| [**serverless-3-tier**](./serverless-3-Tier) | GCP | Production-ready Cloud Run stack with Global Load Balancing, CDN, Secret Manager, and Private Cloud SQL. |
 | [**gke-argocd**](./gke-argocd) | GCP | GKE cluster with integrated ArgoCD, Monitoring, and Security. |
 
 ## 🚀 How to use this Repository

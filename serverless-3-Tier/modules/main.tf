@@ -10,7 +10,6 @@ resource "google_compute_subnetwork" "connector_subnet" {
   network       = google_compute_network.app_vpc.id
 }
 
-# 3. Create the Serverless VPC Connector
 resource "google_vpc_access_connector" "main_connector" {
   name   = "vpc-conn"
   region = var.cloud_run_region
@@ -76,7 +75,7 @@ resource "google_compute_backend_service" "frontend" {
 
 resource "google_compute_url_map" "frontend" {
   name            = "url-map"
-  default_service = google_compute_backend_service.frontend.id # Default goes to Frontend
+  default_service = google_compute_backend_service.frontend.id 
 
   host_rule {
     hosts        = ["*"]
@@ -91,7 +90,6 @@ resource "google_compute_url_map" "frontend" {
     dynamic "path_rule" {
       for_each = var.api_routes
       content {
-        # This creates paths like ["/api/*", "/v1/auth/*", etc.]
         paths = ["/${path_rule.key}/*"]
 
         service = google_compute_backend_service.backend[path_rule.value].id
@@ -169,7 +167,7 @@ resource "google_cloud_run_v2_service_iam_member" "backend_access" {
 }
 
 resource "google_compute_region_network_endpoint_group" "backend_neg" {
-  for_each              = toset(values(var.api_routes)) # Add this line
+  for_each              = toset(values(var.api_routes))
   name                  = "${each.key}-neg"
   network_endpoint_type = "SERVERLESS"
   region                = var.cloud_run_region
@@ -205,11 +203,11 @@ resource "google_compute_global_address" "private_ip_address" {
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
   prefix_length = 16
-  network       = google_compute_network.app_vpc.id # Reuses your custom-vpc 
+  network       = google_compute_network.app_vpc.id 
   project       = var.project_id
 }
 
-# 2. Establish a private connection between Google and your VPC
+# Establish a private connection between Google and your VPC
 resource "google_service_networking_connection" "private_vpc_connection" {
   network                 = google_compute_network.app_vpc.id
   service                 = "servicenetworking.googleapis.com"
@@ -217,10 +215,9 @@ resource "google_service_networking_connection" "private_vpc_connection" {
   depends_on              = [google_project_service.enabled_apis]
 }
 
-# 3. The Cloud SQL Instance
 resource "google_sql_database_instance" "main" {
-  name             = "app-db-instance"
-  database_version = "POSTGRES_15"
+  name             = var.database_name
+  database_version = var.database_version
   region           = var.cloud_run_region
   project          = var.project_id
 
@@ -228,20 +225,20 @@ resource "google_sql_database_instance" "main" {
   depends_on = [google_service_networking_connection.private_vpc_connection]
 
   settings {
-    tier = "db-f1-micro" 
+    tier = var.database_tier
 
     ip_configuration {
-      ipv4_enabled    = false # Disables Public IP for security
+      ipv4_enabled    = false 
       private_network = google_compute_network.app_vpc.id
     }
 
     # Optimization to keep costs low
     backup_configuration {
-      enabled = false
+      enabled = var.backup_configuration
     }
   }
 
-  deletion_protection = false 
+  deletion_protection = var.deletion_protection
 }
 
 resource "google_sql_database" "database" {

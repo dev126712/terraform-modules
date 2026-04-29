@@ -10,4 +10,8 @@ module "cloud_run" {
 
   backend_container_image  = "us-central1-docker.pkg.dev/project-test-490416/app-images/backend:latest3"
   frontend_container_image = "us-central1-docker.pkg.dev/project-test-490416/app-images/frontend:latest3"
+
+  database_name = "app-db-instance"
+  database_version = "POSTGRES_15"
+  database_tier = "db-f1-micro" 
 }

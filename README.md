@@ -12,6 +12,7 @@ Welcome to my personal collection of reusable Terraform modules. This repository
 ## 🚀 How to use this Repository
 Each folder in this repository is a standalone module. You can reference them directly in your Terraform code:
 
+Example: Deploying the GKE-ArgoCD
 ```hcl
 module "my_infrastructure" {
   source = "[github.com/dev126712/terraform-modules//gke-argocd](https://github.com/dev126712/terraform-modules//gke-argocd)"

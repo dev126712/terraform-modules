@@ -1,9 +1,7 @@
-![alt text](https://github.com/dev126712/three-tier-architecture/blob/6235857785ad7c407f1f26ef24c3ce65f9fb1e3f/Untitled%20Diagram.drawio.png)
-
-
 # AWS Production-Grade 3-Tier Architecture
 
 This project deploys a highly secure and scalable 3-tier architecture on AWS using Terraform. It is designed to simulate a real-world enterprise environment where security and auditing are paramount.
+![alt text](https://github.com/dev126712/three-tier-architecture/blob/6235857785ad7c407f1f26ef24c3ce65f9fb1e3f/Untitled%20Diagram.drawio.png)
 
 ## 🏗️ Architecture Design
 

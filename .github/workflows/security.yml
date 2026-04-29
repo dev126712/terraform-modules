@@ -4,7 +4,9 @@ on:
   push:
     branches:
       - main
-    paths: '**'
+    paths:
+      - '**'
+      - '!**.md'
 
 permissions:
   contents: read

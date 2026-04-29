@@ -94,7 +94,6 @@ resource "google_compute_url_map" "frontend" {
         # This creates paths like ["/api/*", "/v1/auth/*", etc.]
         paths = ["/${path_rule.key}/*"]
 
-        # We assume your backend services are named according to the value in the map
         service = google_compute_backend_service.backend[path_rule.value].id
       }
     }
@@ -108,7 +107,7 @@ resource "google_compute_target_http_proxy" "frontend" {
 
 resource "google_compute_global_address" "website_ip" {
   name         = "lb-static-ip"
-  address_type = "EXTERNAL" # This makes it a public IP on the internet
+  address_type = "EXTERNAL"
 }
 
 resource "google_compute_global_forwarding_rule" "frontend" {
@@ -229,7 +228,7 @@ resource "google_sql_database_instance" "main" {
   depends_on = [google_service_networking_connection.private_vpc_connection]
 
   settings {
-    tier = "db-f1-micro" # Smallest tier, perfect for testing/free tier
+    tier = "db-f1-micro" 
 
     ip_configuration {
       ipv4_enabled    = false # Disables Public IP for security
@@ -242,16 +241,14 @@ resource "google_sql_database_instance" "main" {
     }
   }
 
-  deletion_protection = false # Allows you to destroy it easily during development [cite: 8]
+  deletion_protection = false 
 }
 
-# 4. The actual Database inside the instance
 resource "google_sql_database" "database" {
   name     = "app_db"
   instance = google_sql_database_instance.main.name
 }
 
-# 5. The Database User
 resource "google_sql_user" "users" {
   name     = "app_user"
   instance = google_sql_database_instance.main.name
@@ -259,14 +256,12 @@ resource "google_sql_user" "users" {
   password = random_password.db_password.result
 }
 
-# 1. Generate a secure random password
 resource "random_password" "db_password" {
   length           = 16
   special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
 }
 
-# 2. Create the Secret container
 resource "google_secret_manager_secret" "db_password" {
   secret_id = "db-password"
   replication {
@@ -275,7 +270,6 @@ resource "google_secret_manager_secret" "db_password" {
   depends_on = [google_project_service.enabled_apis]
 }
 
-# 3. Store the random password in the secret
 resource "google_secret_manager_secret_version" "db_password_v1" {
   secret      = google_secret_manager_secret.db_password.id
   secret_data = random_password.db_password.result

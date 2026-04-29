@@ -1,5 +1,5 @@
 variable "project_id" {
-    description = "project ID"
+  description = "project ID"
 }
 
 variable "vpc" {
@@ -7,28 +7,28 @@ variable "vpc" {
 }
 
 variable "subnet" {
-  
+
 }
 
 variable "google_cloud_run_service_name" {
-    description = "cloud run service name"
+  description = "cloud run service name"
 }
 
 variable "cloud_run_region" {
-    description = "Cloud run region"
+  description = "Cloud run region"
 }
 
 variable "google_cloud_run_backend_service_name" {
-    description = "Cloud Run backend service name"
-    default     = "backend-api"
+  description = "Cloud Run backend service name"
+  default     = "backend-api"
 }
 
 variable "backend_container_image" {
-    description = "backend image"
+  description = "backend image"
 }
 
 variable "frontend_container_image" {
-    description = "frontend image"
+  description = "frontend image"
 }
 
 ##################### ---------------- API Route ---------------- #####################
@@ -37,9 +37,9 @@ variable "frontend_container_image" {
 variable "api_routes" {
   description = "A map of API paths to their respective backend services"
   type        = map(string)
-  default     = {
-    "api"     = "backend"    # /api/* goes to the main backend
-    "v1/auth" = "auth-svc"   # /api/v1/auth/* goes to a specific auth service
+  default = {
+    "api"     = "backend"     # /api/* goes to the main backend
+    "v1/auth" = "auth-svc"    # /api/v1/auth/* goes to a specific auth service
     "billing" = "billing-svc" # /api/billing/* goes to billing
   }
 }

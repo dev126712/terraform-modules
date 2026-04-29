@@ -22,7 +22,7 @@ resource "google_vpc_access_connector" "main_connector" {
 resource "google_cloud_run_v2_service" "frontend" {
   name     = var.google_cloud_run_service_name
   location = var.cloud_run_region
-  ingress = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
+  ingress  = "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER"
 
   template {
     containers {
@@ -54,10 +54,10 @@ resource "google_compute_backend_service" "frontend" {
   name                  = "backend-service"
   protocol              = "HTTP"
   load_balancing_scheme = "EXTERNAL_MANAGED"
-  
+
   enable_cdn = true
   cdn_policy {
-    cache_mode = "CACHE_ALL_STATIC"
+    cache_mode  = "CACHE_ALL_STATIC"
     default_ttl = 3600
     client_ttl  = 3600
     max_ttl     = 86400
@@ -92,8 +92,8 @@ resource "google_compute_url_map" "frontend" {
       for_each = var.api_routes
       content {
         # This creates paths like ["/api/*", "/v1/auth/*", etc.]
-        paths   = ["/${path_rule.key}/*"] 
-        
+        paths = ["/${path_rule.key}/*"]
+
         # We assume your backend services are named according to the value in the map
         service = google_compute_backend_service.backend[path_rule.value].id
       }
@@ -146,7 +146,7 @@ resource "google_cloud_run_v2_service" "backend" {
       }
       env {
         name  = "DB_NAME"
-        value = google_sql_database.database.name  # Added this
+        value = google_sql_database.database.name # Added this
       }
       env {
         name = "DB_PASSWORD"
@@ -181,11 +181,11 @@ resource "google_compute_region_network_endpoint_group" "backend_neg" {
 
 resource "google_compute_backend_service" "backend" {
   for_each = toset(values(var.api_routes))
-  
+
   name                  = "${each.key}-backend"
   load_balancing_scheme = "EXTERNAL_MANAGED"
   protocol              = "HTTP"
-  
+
   backend {
     # This links each backend to its specific Cloud Run NEG
     group = google_compute_region_network_endpoint_group.backend_neg[each.key].id
@@ -212,7 +212,7 @@ resource "google_compute_global_address" "private_ip_address" {
 
 # 2. Establish a private connection between Google and your VPC
 resource "google_service_networking_connection" "private_vpc_connection" {
-  network                 = google_compute_network.app_vpc.id 
+  network                 = google_compute_network.app_vpc.id
   service                 = "servicenetworking.googleapis.com"
   reserved_peering_ranges = [google_compute_global_address.private_ip_address.name]
   depends_on              = [google_project_service.enabled_apis]
@@ -224,21 +224,21 @@ resource "google_sql_database_instance" "main" {
   database_version = "POSTGRES_15"
   region           = var.cloud_run_region
   project          = var.project_id
-  
+
   # Ensure the connection is ready before creating the DB
   depends_on = [google_service_networking_connection.private_vpc_connection]
 
   settings {
     tier = "db-f1-micro" # Smallest tier, perfect for testing/free tier
-    
+
     ip_configuration {
       ipv4_enabled    = false # Disables Public IP for security
-      private_network = google_compute_network.app_vpc.id 
+      private_network = google_compute_network.app_vpc.id
     }
 
     # Optimization to keep costs low
     backup_configuration {
-      enabled = false 
+      enabled = false
     }
   }
 
@@ -256,7 +256,7 @@ resource "google_sql_user" "users" {
   name     = "app_user"
   instance = google_sql_database_instance.main.name
   # Reference the random password directly
-  password = random_password.db_password.result 
+  password = random_password.db_password.result
 }
 
 # 1. Generate a secure random password

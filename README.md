@@ -8,6 +8,7 @@ Welcome to my personal collection of reusable Terraform modules. This repository
 | :--- | :--- | :--- |
 | [**serverless-3-tier**](./serverless-3-Tier) | GCP | Production-ready Cloud Run stack with Global Load Balancing, CDN, Secret Manager, and Private Cloud SQL. |
 | [**gke-argocd**](./gke-argocd) | GCP | GKE cluster with integrated ArgoCD, Monitoring, and Security. |
+| [**3-tier-architecture**](./3-tier-architecture) | AWS | Enterprise-grade stack featuring WAFv2 protection, Public/Internal ALBs, Auto Scaling, and Multi-AZ RDS isolation. |
 
 ## 🚀 How to use this Repository
 Each folder in this repository is a standalone module. You can reference them directly in your Terraform code:
@@ -37,3 +38,14 @@ module "app_infrastructure" {
   }
 }
 ```
+
+### Example: Deploying the AWS 3-Tier Stack
+```hcl
+module "aws_app_infra" {
+  source = "[github.com/dev126712/terraform-modules//3-tier-architecture-aws](https://github.com/dev126712/terraform-modules//3-tier-architecture)"
+
+  aws_region               = "us-east-1"
+  vpc_cidr                 = "10.0.0.0/16"
+  web_tier_certificate_arn = "arn:aws:acm:..."
+  db_password              = var.db_password # Marked as sensitive
+}

@@ -19,6 +19,7 @@ module "my_infrastructure" {
   # Module specific variables
   project_id = "your-gcp-project"
 }
+```
 
 Example: Deploying the Serverless 3-Tier Stack
 ```hcl

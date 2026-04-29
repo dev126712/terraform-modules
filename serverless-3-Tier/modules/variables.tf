@@ -39,7 +39,7 @@ variable "api_routes" {
   type        = map(string)
   default = {
     "api"     = "backend"     # /api/* goes to the main backend
-    "v1/auth" = "auth-svc"    # /api/v1/auth/* goes to a specific auth service
-    "billing" = "billing-svc" # /api/billing/* goes to billing
+    # "v1/auth" = "auth-svc"    # /api/v1/auth/* goes to a specific auth service
+    # "billing" = "billing-svc" # /api/billing/* goes to billing
   }
 }

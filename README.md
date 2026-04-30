@@ -27,7 +27,7 @@ module "my_infrastructure" {
 Example: Deploying the Serverless 3-Tier Stack
 ```hcl
 module "app_infrastructure" {
-  source = "github.com/dev126712/terraform-modules//serverless-3-tier"
+  source = "github.com/dev126712/terraform-modules//serverless-3-tier(https://github.com/dev126712/terraform-modules//serverless-3-tier)"
 
   project_id               = "your-gcp-project-id"
   cloud_run_region         = "us-central1"

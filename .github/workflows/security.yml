@@ -20,7 +20,7 @@ jobs:
     - name: checkout repo
       uses: actions/checkout@v4
 
-    - name: Run Checkov Security Scan on yml files
+    - name: Run Checkov Security Scan on workflows yml files
       uses: bridgecrewio/checkov-action@master
       with:
         directory:  .github/workflows
@@ -36,7 +36,7 @@ jobs:
     - name: checkout repo
       uses: actions/checkout@v4
 
-    - name: Run Checkov Security Scan on yml files
+    - name: Run Checkov Security Scan on terraform files
       uses: bridgecrewio/checkov-action@master
       with:
         directory:  .

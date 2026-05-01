@@ -6,6 +6,7 @@ This project implements a production-ready Google Cloud Platform (GCP) Landing Z
 
 The Landing Zone is designed to centralize networking and security while allowing decentralized development across different environments (Development, Testing, and Production).
 
+![GCP Architecture Results](https://github.com/dev126712/terraform-modules/blob/63fd423dfff3f33629fd44ed9fdf7d302a88eb78/gcp-landing-zone/Screenshot%202026-05-01%2010.57.34%20AM.png)
 ![GCP Architecture Diagram](./Screenshot%202026-04-30%208.30.26%20PM.png)
 
 ### Key Components
@@ -30,5 +31,3 @@ The Landing Zone is designed to centralize networking and security while allowin
 *  **Why Shared VPC ?**: By centralizing the network in the Shared infrastructure folder, we reduce operational overhead, maintain a single source of truth for firewall rules, and lower costs by sharing Cloud NAT and Interconnect resources across projects.
 * **Subnet-Level IAM**: Instead of granting network-wide access, we use roles/compute.networkUser at the subnetwork level. This ensures the Dev project can only "see" and use the Dev subnet, maintaining strict environment boundaries.
 *  **Modular Design**: The project uses a standalone internal module to ensure that the Landing Zone logic can be versioned and reused for multiple departments or business units.
-
-![GCP Architecture Results](https://github.com/dev126712/terraform-modules/blob/63fd423dfff3f33629fd44ed9fdf7d302a88eb78/gcp-landing-zone/Screenshot%202026-05-01%2010.57.34%20AM.png)

@@ -69,13 +69,12 @@ variable "static_ip_name" {
 variable "node_locations" {
   type        = list(string)
   description = "The list of zones where nodes should be created."
-  default     = ["us-central1-a", "us-central1-b", "us-central1-c"]
 }
 
 variable "zone_count" {
   type        = number
   description = "The number of zones from the list to utilize."
-  default     = 1
+  # default     = 1
 }
 
 

@@ -10,7 +10,7 @@ Welcome to my personal collection of reusable Terraform modules. This repository
 | [**serverless-3-tier**](./serverless-3-Tier) | GCP | Production-ready Cloud Run stack with Global Load Balancing, CDN, Secret Manager, and Private Cloud SQL. |
 | [**gke-argocd**](./gke-argocd) | GCP | GKE cluster with integrated ArgoCD, Monitoring, and Security. |
 | [**3-tier-architecture**](./3-tier-architecture) | AWS | Enterprise-grade stack featuring WAFv2 protection, Public/Internal ALBs, Auto Scaling, and Multi-AZ RDS isolation. |
-
+| [**gcp-landing-zone**](./gcp-landing-zone) | GCP  | Enterprise foundation featuring Folder hierarchy, Shared VPC Host projects, and Org-level Policy guardrails. |
 ## 🚀 How to use this Repository
 Each folder in this repository is a standalone module. You can reference them directly in your Terraform code:
 

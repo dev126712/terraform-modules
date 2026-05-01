@@ -31,4 +31,4 @@ The Landing Zone is designed to centralize networking and security while allowin
 * **Subnet-Level IAM**: Instead of granting network-wide access, we use roles/compute.networkUser at the subnetwork level. This ensures the Dev project can only "see" and use the Dev subnet, maintaining strict environment boundaries.
 *  **Modular Design**: The project uses a standalone internal module to ensure that the Landing Zone logic can be versioned and reused for multiple departments or business units.
 
-![GCP Architecture Results](https://github.com/dev126712/terraform-modules/blob/e81d0ea14d32f540ac7272fd920240c4ffb40502/gcp-landing-zone/Screenshot%202026-05-01%201.34.59%20AM.png)
+![GCP Architecture Results](https://github.com/dev126712/terraform-modules/blob/63fd423dfff3f33629fd44ed9fdf7d302a88eb78/gcp-landing-zone/Screenshot%202026-05-01%2010.57.34%20AM.png)

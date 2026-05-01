@@ -8,3 +8,21 @@ resource "google_compute_shared_vpc_service_project" "prod_attach" {
 
   depends_on = [google_compute_shared_vpc_host_project.host]
 }
+
+# Allow Dev Project to use Dev Subnet
+resource "google_compute_subnetwork_iam_member" "dev_user" {
+  project    = google_project.shared_net.project_id
+  region     = google_compute_subnetwork.dev_subnet.region
+  subnetwork = google_compute_subnetwork.dev_subnet.name
+  role       = "roles/compute.networkUser"
+  member     = "serviceAccount:service-${google_project.developer_project.number}@compute-system.iam.gserviceaccount.com"
+}
+
+# Allow Test Project to use Test Subnet
+resource "google_compute_subnetwork_iam_member" "test_user" {
+  project    = google_project.shared_net.project_id
+  region     = google_compute_subnetwork.test_subnet.region
+  subnetwork = google_compute_subnetwork.test_subnet.name
+  role       = "roles/compute.networkUser"
+  member     = "serviceAccount:service-${google_project.internal_testing_project.number}@compute-system.iam.gserviceaccount.com"
+}

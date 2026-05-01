@@ -3,7 +3,7 @@ module "gke_cluster" {
   source = "./modules"
 
   # Cluster Configuration
-  project_id          = var.project_id
+  project_id          = "project-test-490416"
   cluster_name        = "my-gke-cluster"
   cluster_region      = "us-central1"
   region              = "us-central1"
@@ -16,7 +16,7 @@ module "gke_cluster" {
   node_pool_count = 2 # This is the number of nodes per zone 
   node_locations = [ "us-central1-a", "us-central1-b", "us-central1-c" ]
 
-  # node_locations defaults to ["us-central1-a", "us-central1-b", "us-central1-c"] [cite: 2]
+  # node_locations defaults to ["us-central1-a", "us-central1-b", "us-central1-c"]
   zone_count = 2 # This tells the module to slice the first 2 zones
 
   # Scaling & Management
@@ -25,12 +25,6 @@ module "gke_cluster" {
   auto_repair         = true
   auto_upgrade        = true
 
-<<<<<<< HEAD
-=======
-  # node_locations defaults to ["us-central1-a", "us-central1-b", "us-central1-c"]
-  zone_count = 2 # This tells the module to slice the first 2 zones
-
->>>>>>> 42fa2da63649757bfb8c1a48f5e9f3ab0e0d7a11
   static_ip_name = "lb_name"
 
   # ArgoCD dynamic vars
@@ -43,3 +37,39 @@ module "gke_cluster" {
   sync_self_heal  = true
 }
 
+# module "gke_cluster" {
+#   source = "./modules"
+
+#   # Cluster Configuration
+#   project_id          = ""
+#   cluster_name        = ""
+#   cluster_region      = ""
+#   region              = ""
+#   node_count          = 
+#   deletion_protection = 
+
+#   # Node Pool Configuration
+#   node_pool_name  = ""
+#   machine_type    = ""
+#   node_pool_count =  
+#   node_locations = [ "" ]
+
+#   zone_count =
+
+#   # Scaling & Management
+#   min_node_pool_count =
+#   max_node_pool_count =
+#   auto_repair         =
+#   auto_upgrade        =
+
+#   static_ip_name = ""
+
+#   # ArgoCD dynamic vars
+#   argocd_app_name = ""
+#   repo_url        = ""
+#   domain_name     = ""
+#   target_revision = ""
+#   app_path        = ""
+#   sync_prune      =
+#   sync_self_heal  =
+# }

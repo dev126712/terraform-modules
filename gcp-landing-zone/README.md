@@ -20,15 +20,15 @@ The Landing Zone is designed to centralize networking and security while allowin
 ## 📂 Directory Structure
 ```text
 .
-├── main.tf                 # Root module calling the internal module
-├── providers.tf            # Provider configuration (Google & Google-Beta)
-├── variables.tf            # Global input variables
-├── terraform.tfvars        # Environment-specific values (Sensitive)
-└── module/                 # Internal Logic
-    ├── hierarchy.tf        # Folders and Project resources
-    ├── networking.tf       # Shared VPC Host/Service attachments
-    └── network_resources.tf# VPC, Subnets, and Cloud NAT
-
+├── main.tf                     Root module
+├── providers.tf                Provider configuration (Google & Google-Beta)
+├── variables.tf                Global input variables
+├── terraform.tfvars            Environment-specific values (Sensitive)
+└── module/                     Internal Logic
+    ├── hierarchy.tf            Folders and Project resources
+    ├── networking.tf           Shared VPC Host/Service attachments
+    └── network_resources.tf    VPC, Subnets, and Cloud NAT
+```
 🛠️ Design Decisions
     - Why Shared VPC?: By centralizing the network in the Shared infrastructure folder, we reduce operational overhead, maintain a single source of truth for firewall rules, and lower costs by sharing Cloud NAT and Interconnect resources across projects.
 

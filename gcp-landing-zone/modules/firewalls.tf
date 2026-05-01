@@ -52,9 +52,9 @@ resource "google_compute_firewall" "allow_intra_env" {
 
 # --- Deny Inter-Environment Traffic ---
 resource "google_compute_firewall" "deny_dev_to_prod" {
-  name    = "deny-dev-to-prod"
-  network = google_compute_network.shared_vpc.name
-  project = google_project.shared_net.project_id
+  name     = "deny-dev-to-prod"
+  network  = google_compute_network.shared_vpc.name
+  project  = google_project.shared_net.project_id
   priority = 1000
 
   deny {

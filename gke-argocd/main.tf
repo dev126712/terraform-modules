@@ -25,6 +25,12 @@ module "gke_cluster" {
   auto_repair         = true
   auto_upgrade        = true
 
+<<<<<<< HEAD
+=======
+  # node_locations defaults to ["us-central1-a", "us-central1-b", "us-central1-c"]
+  zone_count = 2 # This tells the module to slice the first 2 zones
+
+>>>>>>> 42fa2da63649757bfb8c1a48f5e9f3ab0e0d7a11
   static_ip_name = "lb_name"
 
   # ArgoCD dynamic vars

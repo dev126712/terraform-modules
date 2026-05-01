@@ -21,10 +21,10 @@ The Landing Zone is designed to centralize networking and security while allowin
 
 
 ## 📂 Project Structure
-*   `hierarchy.tf`: Folder structure and project placement.
-*   `networking.tf`: Shared VPC attachments and IAM permissions
-*   `network_resources.tf`: VPC and Subnet definitions.
-*   `firewalls.tf` : Centralizes ingress and egress firewall rules, including intra-environment communication and inter-environment isolation.
+*   **hierarchy.tf**: Folder structure and project placement.
+*   **networking.tf**: Shared VPC attachments and IAM permissions
+*   **network_resources.tf**: VPC and Subnet definitions.
+*   **firewalls.tf** : Centralizes ingress and egress firewall rules, including intra-environment communication and inter-environment isolation.
 
 🛠️ Design Decisions 
 *  **Why Shared VPC ?**: By centralizing the network in the Shared infrastructure folder, we reduce operational overhead, maintain a single source of truth for firewall rules, and lower costs by sharing Cloud NAT and Interconnect resources across projects.

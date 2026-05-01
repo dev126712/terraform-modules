@@ -6,7 +6,6 @@ This project implements a production-ready Google Cloud Platform (GCP) Landing Z
 
 The Landing Zone is designed to centralize networking and security while allowing decentralized development across different environments (Development, Testing, and Production).
 
-![GCP Architecture Results](https://github.com/dev126712/terraform-modules/blob/63fd423dfff3f33629fd44ed9fdf7d302a88eb78/gcp-landing-zone/Screenshot%202026-05-01%2010.57.34%20AM.png)
 ![GCP Architecture Diagram](./Screenshot%202026-04-30%208.30.26%20PM.png)
 
 ### Key Components

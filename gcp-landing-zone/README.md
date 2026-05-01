@@ -29,6 +29,7 @@ The Landing Zone is designed to centralize networking and security while allowin
     ├── networking.tf           Shared VPC Host/Service attachments
     └── network_resources.tf    VPC, Subnets, and Cloud NAT
 ```
+
 🛠️ Design Decisions
     - Why Shared VPC?: By centralizing the network in the Shared infrastructure folder, we reduce operational overhead, maintain a single source of truth for firewall rules, and lower costs by sharing Cloud NAT and Interconnect resources across projects.
 

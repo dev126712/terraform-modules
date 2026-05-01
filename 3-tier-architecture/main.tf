@@ -39,12 +39,11 @@ module "three-tier" {
   amis_bastion_host          = "ami-0f39ffd6e446bf727"
   bastion-host-ssh-cidr      = ["78.67.5.54/32"]
 
-
-  ###### ----- Private Load Balancer  ----- ########
+  ###### ----- Private Internal Load Balancer  ----- ########
   private-s3-bucket-name-lb        = "your-alb-logs-bucket-name"
   private-s3-bucket-name-lb-prefix = "internal-alb-access"
 
-  ###### ----- Public Load Balancer  ----- ########
+  ###### ----- Public External Load Balancer  ----- ########
   public-load-balancer-http-allow-cidr = ["28.8.7.6/32"]
   public-s3-bucket-name-lb             = "your-alb-logs-bucket-name"
   public-s3-bucket-name-lb-prefix      = "internal-alb-access"

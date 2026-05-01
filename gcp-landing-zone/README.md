@@ -16,20 +16,17 @@ The Landing Zone is designed to centralize networking and security while allowin
 *   **Security & Governance**: 
     *   Subnets are configured with `private_ip_google_access` to ensure internal-only communication for sensitive workloads.
     *   Projects are created with `auto_create_network = false` to prevent default network clutter and enforce the use of the Shared VPC.
+    *   A regional Cloud NAT and Router in the Host Project provide secure internet egress for private instances without requiring public IPs.
+    *   Centralized firewall rules in the Host Project manage IAP access, Google Health Checks, and strict isolation between Dev, Test, and Prod environments.
 
-## 📂 Directory Structure
-```text
-.
-├── main.tf                     Root module
-├── providers.tf                Provider configuration (Google & Google-Beta)
-├── variables.tf                Global input variables
-├── terraform.tfvars            Environment-specific values (Sensitive)
-└── module/                     Internal Logic
-    ├── hierarchy.tf            Folders and Project resources
-    ├── networking.tf           Shared VPC Host/Service attachments
-    └── network_resources.tf    VPC, Subnets, and Cloud NAT
-```
+
+## 📂 Project Structure
+*   `hierarchy.tf`: Folder structure and project placement.
+*   `networking.tf`: Shared VPC attachments and IAM permissions
+*   `network_resources.tf`: VPC and Subnet definitions.
+*   `firewalls.tf` : Centralizes ingress and egress firewall rules, including intra-environment communication and inter-environment isolation.
 
 🛠️ Design Decisions 
-- Why Shared VPC ?: By centralizing the network in the Shared infrastructure folder, we reduce operational overhead, maintain a single source of truth for firewall rules, and lower costs by sharing Cloud NAT and Interconnect resources across projects.
-- Modular Design: The project uses a standalone internal module to ensure that the Landing Zone logic can be versioned and reused for multiple departments or business units.
+*  **Why Shared VPC ?**: By centralizing the network in the Shared infrastructure folder, we reduce operational overhead, maintain a single source of truth for firewall rules, and lower costs by sharing Cloud NAT and Interconnect resources across projects.
+* **Subnet-Level IAM**: Instead of granting network-wide access, we use roles/compute.networkUser at the subnetwork level. This ensures the Dev project can only "see" and use the Dev subnet, maintaining strict environment boundaries.
+*  **Modular Design**: The project uses a standalone internal module to ensure that the Landing Zone logic can be versioned and reused for multiple departments or business units.

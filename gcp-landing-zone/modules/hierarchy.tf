@@ -33,7 +33,7 @@ resource "google_folder" "shared_infrastructure" {
 
 resource "google_folder" "testing_subfolder" {
   display_name = "Testing folder"
-  parent = google_folder.testing_env.name
+  parent       = google_folder.testing_env.name
 }
 
 # ------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ resource "google_project" "shared_net" {
 
 resource "google_project" "seed_project" {
   name            = "Seed"
-  project_id      = "${var.prefix}-seed-prj" 
+  project_id      = "${var.prefix}-seed-prj"
   folder_id       = google_folder.bootstrap.name
   billing_account = var.billing_account
 

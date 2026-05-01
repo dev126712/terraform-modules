@@ -31,4 +31,5 @@ The Landing Zone is designed to centralize networking and security while allowin
 *  **Why Shared VPC ?**: By centralizing the network in the Shared infrastructure folder, we reduce operational overhead, maintain a single source of truth for firewall rules, and lower costs by sharing Cloud NAT and Interconnect resources across projects.
 * **Subnet-Level IAM**: Instead of granting network-wide access, we use roles/compute.networkUser at the subnetwork level. This ensures the Dev project can only "see" and use the Dev subnet, maintaining strict environment boundaries.
 *  **Modular Design**: The project uses a standalone internal module to ensure that the Landing Zone logic can be versioned and reused for multiple departments or business units.
-![GCP Architecture Diagram]([./Screenshot%202026-04-30%208.30.26%20PM.png](https://github.com/dev126712/terraform-modules/blob/cb79ab2050e87d27874682cfffaa10207ef9186e/gcp-landing-zone/Untitled%20Diagram.drawio%20(2).png))![GCP Architecture Diagram](./Screenshot%202026-04-30%208.30.26%20PM.png)
+![GCP Architecture Diagram](https://github.com/dev126712/terraform-modules/blob/e5c4ce10371d7894af888b304ca20dbde1956b3d/gcp-landing-zone/Untitled%20Diagram.drawio%20(2).png)
+![GCP Architecture Diagram](./Screenshot%202026-04-30%208.30.26%20PM.png)

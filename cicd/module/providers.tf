@@ -15,11 +15,9 @@ terraform {
 # Default provider for general resources
 provider "google" {
   region = var.region
-  zone   = var.zone
 }
 
 # Beta provider for Vertex AI and advanced networking features
 provider "google-beta" {
   region = var.region
-  zone   = var.zone
 }

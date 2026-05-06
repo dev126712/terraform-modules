@@ -1,0 +1,30 @@
+###############################################################################
+# Example tfvars — copy to terraform.tfvars and fill in your values
+# NEVER commit terraform.tfvars to Git (it contains secrets)
+###############################################################################
+
+project_id  = "your-gcp-project-id"
+region      = "us-central1"
+environment = "prod"
+
+# Networking
+vpc_cidr       = "10.20.0.0/16"
+subnet_cidr    = "10.20.1.0/24"
+connector_cidr = "10.20.2.0/28"
+
+# Database
+db_tier                = "db-g1-small"    # Use db-custom-2-4096 for prod
+db_availability_type   = "REGIONAL"       # HA — use ZONAL for dev
+db_deletion_protection = true
+
+# Cloud Run
+backstage_image  = "us-central1-docker.pkg.dev/your-project/backstage-repo/backstage:latest"
+min_instances    = 1
+max_instances    = 4
+cloud_run_cpu    = "2"
+cloud_run_memory = "2Gi"
+allow_public_access = true
+
+# Secrets (use Secret Manager or CI/CD env vars instead of hardcoding)
+github_token         = "ghp_xxxxxxxxxxxxxxxxxxxx"
+backstage_app_config = ""   # Optional: override app-config via Secret Manager

@@ -1,9 +1,5 @@
 ###############################################################################
 # Module: networking
-# Creates: VPC, Private Subnet, Cloud Router, Cloud NAT,
-#          Private Service Access (for Cloud SQL private IP),
-#          Serverless VPC Access Connector (for Cloud Run → Cloud SQL),
-#          Firewall Rules
 ###############################################################################
 
 ###############################################################################

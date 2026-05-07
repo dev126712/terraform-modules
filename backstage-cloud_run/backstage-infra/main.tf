@@ -1,6 +1,5 @@
 ###############################################################################
 # Backstage Platform — Root Module
-# Orchestrates: networking, IAM, secrets, database, artifact registry, cloud run
 ###############################################################################
 
 terraform {

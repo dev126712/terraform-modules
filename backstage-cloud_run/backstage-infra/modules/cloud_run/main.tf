@@ -1,6 +1,6 @@
 ###############################################################################
 # Module: cloud_run
-# Creates: Cloud Run v2 service for Backstage with:
+# Cloud Run v2 service for Backstage with:
 #   - VPC connector (private Cloud SQL access)
 #   - Secrets from Secret Manager (no env var plaintext)
 #   - Min instances (no cold starts)

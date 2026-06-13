@@ -19,7 +19,7 @@ Each folder in this repository is a standalone module. You can reference them di
 Example: Deploying the GKE-ArgoCD
 ```hcl
 module "my_infrastructure" {
-  source = "[github.com/dev126712/terraform-modules//gke-argocd](https://github.com/dev126712/terraform-modules//gke-argocd)"
+  source = "github.com/dev126712/terraform-modules//gke-argocd"
   
   # Module specific variables
   project_id = "your-gcp-project"
@@ -29,7 +29,7 @@ module "my_infrastructure" {
 Example: Deploying the Serverless 3-Tier Stack
 ```hcl
 module "app_infrastructure" {
-  source = "github.com/dev126712/terraform-modules//serverless-3-tier(https://github.com/dev126712/terraform-modules//serverless-3-tier)"
+  source = "github.com/dev126712/terraform-modules//serverless-3-Tier"
 
   project_id               = "your-gcp-project-id"
   cloud_run_region         = "us-central1"
@@ -45,7 +45,7 @@ module "app_infrastructure" {
 ### Example: Deploying the AWS 3-Tier Stack
 ```hcl
 module "aws_app_infra" {
-  source = "[github.com/dev126712/terraform-modules//3-tier-architecture-aws](https://github.com/dev126712/terraform-modules//3-tier-architecture)"
+  source = "github.com/dev126712/terraform-modules//3-tier-architecture"
 
   aws_region               = "us-east-1"
   vpc_cidr                 = "10.0.0.0/16"
